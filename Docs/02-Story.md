@@ -738,4 +738,350 @@ The screen fades to black.
 - Headlight flash.
 - Environmental fading.
 - Fade to black.
+
+# Level 3 — The Weight of the Father
+
+## Overview
+
+The player enters a distorted version of the family home after reconstructing the events of the final evening.
+
+This level shifts the perspective from the son's experience to the father's life and responsibilities.
+
+The goal is not to excuse the father's behavior, but to help the player understand what may have influenced his actions.
+
+The player discovers evidence of:
+
+- Work pressure
+- Financial responsibility
+- Family responsibilities
+- Concern for his son
+
+The level ends with the player seeing the argument from the father's perspective.
+
+---
+
+# Level Flow
+
+## Phase 1 — Entering the Memory
+
+The player enters the family home.
+
+The environment is familiar but distorted:
+
+- Slightly darker lighting
+- Unstable shadows
+- Clocks behaving strangely
+- Distant sounds from the father's workplace
+- Objects appearing displaced
+- Occasional memory distortions
+
+The house contains several areas:
+
+- Living room
+- Father's workspace
+- Boy's bedroom
+- Hallway
+- Main entrance
+
+The player begins exploring the environment.
+
+---
+
+# Phase 2 — Discovering the Father's Life
+
+The player investigates objects around the house.
+
+Important environmental evidence includes:
+
+- Work documents
+- Bills
+- Work tools
+- Father's jacket
+- Family photographs
+- Telephone
+- Keys
+- Clock
+
+These objects reveal information about the father's responsibilities without directly explaining everything through dialogue.
+
+---
+
+# Memory Fragment Mechanic
+
+Memory fragments appear as distorted pieces of reality rather than normal collectible objects.
+
+They look like:
+
+- Broken pieces of a past scene
+- Translucent visual distortions
+- Flickering fragments
+- Small pieces of the environment mixed with the memory
+
+The player does not simply pick them up and carry them.
+
+Instead:
+
+1. The player discovers a memory fragment.
+2. The player investigates it.
+3. The player identifies the location it belongs to.
+4. The player approaches that location.
+5. The fragment reacts when close to the correct place.
+6. The player interacts with it.
+7. The fragment aligns with the environment.
+8. The environment temporarily transforms into the memory.
+9. A short memory sequence plays.
+10. The world returns to its distorted state.
+
+This makes the mechanic feel like reconstructing a memory rather than collecting items.
+
+---
+
+# Phase 3 — Reconstructing the Father's Memories
+
+The player must align four important memories with their correct locations.
+
+## Memory 1 — Work
+
+### Evidence
+
+Work-related documents and tools.
+
+### Correct Location
+
+Father's desk/workspace.
+
+### Memory
+
+The father is shown working late and dealing with work responsibilities.
+
+The scene establishes that work occupies a significant part of his life.
+
+---
+
+## Memory 2 — Financial Responsibility
+
+### Evidence
+
+Bills and financial documents.
+
+### Correct Location
+
+Father's desk/workspace.
+
+### Memory
+
+The father is shown dealing with bills and household expenses.
+
+The scene reinforces the pressure of supporting the family.
+
+---
+
+## Memory 3 — Family Responsibility
+
+### Evidence
+
+Family photographs and personal belongings.
+
+### Correct Location
+
+Living room.
+
+### Memory
+
+A short positive family memory plays.
+
+The scene reminds the player that the father was not defined only by conflict.
+
+He also had a relationship with his family and cared about them.
+
+---
+
+## Memory 4 — Concern for His Son
+
+### Evidence
+
+The boy's belongings and family photographs.
+
+### Correct Location
+
+Boy's bedroom.
+
+### Memory
+
+The father is shown checking on or thinking about his son.
+
+The scene suggests that his behavior during the argument was partly driven by concern.
+
+However, the game does not present this concern as justification for hurting his son emotionally.
+
+---
+
+# Environmental Storytelling
+
+The player gradually understands the father's situation through the environment.
+
+## Work Desk
+
+- Documents
+- Work equipment
+- Notes
+- Telephone
+
+## House
+
+- Bills
+- Family photographs
+- Everyday responsibilities
+
+## Boy's Room
+
+- Personal belongings
+- Signs of the son's life
+- Evidence that the father pays attention to him
+
+The player should understand the father's pressure without needing long exposition.
+
+---
+
+# Phase 4 — Final Memory
+
+After all four memories have been reconstructed, the environment becomes increasingly unstable.
+
+The player is taken back to the final argument.
+
+This time, the event is presented from the father's perspective.
+
+The player sees:
+
+- The father trying to communicate
+- The father's frustration
+- His concern about his son
+- The son's emotional reaction
+- The argument escalating
+- The son deciding to leave
+
+The same event from Level 2 is now given additional context.
+
+---
+
+# Important Narrative Point
+
+The level should not communicate:
+
+> "The father was right."
+
+Instead, it communicates:
+
+> "The father was worried, but he did not know how to express it."
+
+The player can understand the father's intentions while still recognizing that his actions and words caused emotional harm.
+
+---
+
+# Emotional Pressure
+
+Emotional Pressure increases during the more intense parts of the level.
+
+Pressure can rise from:
+
+- Confronting painful memories
+- Watching the final argument
+- Remaining inside highly distorted areas
+- Repeatedly failing important interactions
+
+Memory fragments themselves do **not** automatically increase Pressure.
+
+Exploring memories is safe.
+
+The emotional confrontation is what creates pressure.
+
+---
+
+# Pressure States
+
+## Low Pressure
+
+- Environment mostly stable
+- Clear audio
+- Normal lighting
+
+## Medium Pressure
+
+- Lighting flickers
+- Audio becomes slightly distorted
+- Shadows become unstable
+
+## High Pressure
+
+- Voices overlap
+- Heartbeat and breathing become louder
+- Environment becomes increasingly distorted
+- Memory scenes become harder to perceive clearly
+
+## Maximum Pressure
+
+The memory becomes completely unstable.
+
+The screen fades or the environment collapses, returning the player to the latest checkpoint/current section.
+
+---
+
+# Level Completion
+
+After witnessing the final memory, the player understands that the argument was more complicated than initially believed.
+
+The final realization is:
+
+> **"He was worried... But he never knew how to say it."**
+
+The environment begins transitioning away from the family home.
+
+A distorted hospital corridor begins to appear, leading into **Level 4 — The Memory Timeline**.
+
+---
+
+# Level 3 Assets
+
+## Environment
+
+- Family living room
+- Father's workspace
+- Boy's bedroom
+- Hallway
+- Main entrance
+
+## Props
+
+- Work desk
+- Work documents
+- Bills
+- Work tools
+- Father's jacket
+- Family photographs
+- Clock
+- Telephone
+- Keys
+- Boy's personal belongings
+
+## Audio
+
+- Clock ticking
+- Paper/document sounds
+- Telephone sounds
+- Environmental house ambience
+- Father's voice
+- Distorted argument dialogue
+- Breathing
+- Heartbeat
+- Memory distortion sounds
+
+## VFX
+
+- Memory fragments
+- Flickering lights
+- Distorted shadows
+- Environmental glitches
+- Memory transitions
+- Screen distortion
+- Lighting changes
 ```
