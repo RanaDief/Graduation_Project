@@ -6,9 +6,11 @@ Level 3 explores the father's perspective.
 
 After reconstructing the final evening, the boy begins questioning his memories of his father.
 
-The level takes place in a distorted version of the family home, mainly focused around the father's personal spaces and belongings.
+The entire level takes place inside a distorted version of the father's office.
 
-The boy discovers evidence of the responsibilities and pressure his father was dealing with at the time.
+Everything required to complete the level is contained within the office.
+
+The player discovers evidence of the responsibilities and pressure his father was dealing with at the time.
 
 The goal is not to prove that the father was right.
 
@@ -26,15 +28,15 @@ The level establishes:
 
 # Level Flow
 
-## Phase 1 — The Father's Space
+## Phase 1 — The Father's Office
 
 ### Starting State
 
-The player enters another distorted version of the family home, his fathers office.
+The player enters a distorted version of the father's office.
 
-Unlike Level 2, the house feels more personal and focused on the father.
+Unlike Level 2, the space feels personal and isolated.
 
-The player's attention is drawn toward objects belonging to his father.
+The room contains everything needed to understand the father's perspective and complete the level.
 
 The player hears a faint ticking clock.
 
@@ -50,15 +52,19 @@ The player begins exploring.
 
 Important objects include:
 
-- Father's work desk.
-- Work documents.
-- Bills.
-- Old family photographs.
-- Work tools.
-- Wall clock.
-- Father's jacket.
-- Car keys.
-- Telephone.
+- Father's work desk
+- Work documents
+- Bills
+- Family photographs
+- Work tools
+- Wall clock
+- Father's jacket
+- Car keys
+- Telephone
+- Computer
+- Notebook
+- Filing cabinet
+- Personal belongings connected to the son
 
 The objects reveal information gradually.
 
@@ -110,7 +116,7 @@ The player interacts with them.
 
 A short memory plays.
 
-The father looks at the bills before putting them away.
+The father looks through the bills before putting them away.
 
 He takes a deep breath.
 
@@ -124,7 +130,7 @@ Possible dialogue:
 
 ## Interaction 3 — Father's Jacket
 
-The player's father’s jacket is sitting on the chair.
+The father's jacket is sitting on the office chair.
 
 The player interacts with it.
 
@@ -132,7 +138,7 @@ A short memory begins.
 
 The father arrives home after work.
 
-He removes his jacket, enters his office, removes his jacket and just lie on the chair, exhausted
+He enters the office, removes his jacket, and drops into the chair, exhausted.
 
 The memory fades.
 
@@ -144,7 +150,7 @@ Possible dialogue:
 
 ## Interaction 4 — Family Photograph
 
-The player discovers an older family photograph.
+The player discovers an older family photograph inside the office.
 
 It shows the boy and his father during a positive memory.
 
@@ -164,7 +170,7 @@ Possible dialogue:
 
 # Memory Echoes
 
-Memory Echoes appear throughout the father's space.
+Memory Echoes appear throughout the father's office.
 
 They reveal small pieces of the father's life.
 
@@ -172,10 +178,10 @@ They do not directly increase Emotional Pressure.
 
 They provide:
 
-- Additional context.
-- Small memories.
-- Information about the father's responsibilities.
-- Positive memories between the father and son.
+- Additional context
+- Small memories
+- Information about the father's responsibilities
+- Positive memories between the father and son
 
 ---
 
@@ -249,7 +255,7 @@ The voices overlap:
 
 The room becomes completely silent.
 
-A distorted version of the father's desk appears.
+Distorted memory fragments begin appearing around the office.
 
 The main puzzle begins.
 
@@ -259,16 +265,39 @@ The main puzzle begins.
 
 The player discovers several memory fragments connected to the father's responsibilities.
 
-Each fragment must be placed next to the object that best represents the event.
+The fragments are not inventory items.
 
-The player uses environmental clues to determine the correct locations.
+They appear as distorted pieces of reality containing brief visual or audio glimpses from the past.
+
+The player must identify what each fragment represents and align it with the correct location inside the office.
+
+Environmental clues help the player determine the correct locations.
 
 The fragments represent:
 
-1. Work.
-2. Financial responsibility.
-3. Family responsibility.
-4. Concern for his son.
+1. Work
+2. Financial responsibility
+3. Family responsibility
+4. Concern for his son
+
+---
+
+# Memory Fragment Mechanic
+
+The player:
+
+1. Discovers a memory fragment.
+2. Inspects it.
+3. Examines the surrounding office for clues.
+4. Approaches the location that matches the memory.
+5. The fragment reacts when the player is close.
+6. The player interacts with the location.
+7. The fragment aligns with the environment.
+8. The office temporarily transforms into the memory.
+9. A short memory plays.
+10. The office returns to its distorted state.
+
+The player is reconstructing memories rather than collecting objects.
 
 ---
 
@@ -280,7 +309,13 @@ The work documents provide the clue.
 
 **Work Documents = Work = Father's Desk**
 
-### Correct Placement
+### Correct Alignment
+
+The fragment reacts when brought near the father's desk.
+
+The player interacts with the desk.
+
+The fragment aligns with the desk and the environment transforms into the memory.
 
 The father sits at the desk working late.
 
@@ -298,9 +333,13 @@ The player finds a fragment showing the father dealing with bills.
 
 The bills provide the clue.
 
-**Bills = Financial Responsibility = Desk**
+**Bills = Financial Responsibility = Father's Desk**
 
-### Correct Placement
+### Correct Alignment
+
+The fragment reacts near the desk.
+
+The player aligns it with the desk.
 
 The father looks through the bills.
 
@@ -314,13 +353,17 @@ The memory ends.
 
 ## Memory Fragment 3 — Family Responsibility
 
-The player finds a fragment connected to the father's responsibilities toward his family.
+The player finds a fragment connected to the father's relationship with his family.
 
-The family photograph provides the clue.
+The family photographs provide the clue.
 
-**Family Photograph = Family = Living Room**
+**Family Photograph = Family = Photo Area**
 
-### Correct Placement
+### Correct Alignment
+
+The fragment reacts near the family photographs.
+
+The player aligns it with the photograph area.
 
 The father sits with his family.
 
@@ -336,17 +379,19 @@ The memory ends.
 
 The final fragment shows the father thinking about his son.
 
-The player's belongings and family photographs provide the clue.
+The son's photograph or personal belongings provide the clue.
 
-**Family Memories = Son = Boy's Room**
+**Son's Belongings = Concern for Son = Father's Desk / Personal Area**
 
-### Correct Placement
+### Correct Alignment
 
-The father stands outside the boy's bedroom.
+The fragment reacts when the player approaches the relevant personal object.
 
-He looks toward the closed door.
+The player aligns the fragment with the object.
 
-He hesitates before walking away.
+The father looks at a photograph or personal belonging connected to his son.
+
+He pauses before returning to his work.
 
 The memory ends.
 
@@ -354,24 +399,26 @@ The memory ends.
 
 # Incorrect Placement
 
-If the player places a fragment incorrectly:
+If the player aligns a fragment with the wrong location:
 
 - The room becomes darker.
 - The clock begins ticking faster.
 - The father's voice becomes distorted.
-- A short memory fragment plays.
-- The fragment resets.
+- A short distorted memory fragment plays.
+- The fragment separates and resets.
 - Emotional Pressure increases slightly.
 
-The distorted memory provides additional context.
+The distorted memory can provide additional context.
 
 The player can use the information to reconsider the correct location.
+
+Normal experimentation should not be heavily punished.
 
 ---
 
 # Phase 2 Completion
 
-After all fragments are correctly placed, the room becomes quiet.
+After all fragments are correctly aligned, the room becomes quiet.
 
 The memories begin connecting.
 
@@ -426,7 +473,7 @@ The memory ends before the boy leaves.
 
 # The Realization
 
-The player returns to the distorted house.
+The player returns to the distorted office.
 
 The boy reflects on what he has seen.
 
@@ -458,29 +505,30 @@ Memory Echoes do not directly increase Pressure.
 
 Pressure increases mainly through:
 
-- Incorrect memory placements.
-- Intense memories.
-- Extended exposure to distorted memories.
+- Incorrect memory placements
+- Intense memories
+- Extended exposure to distorted memories
+- The final argument
 
 ### Low Pressure
 
-- Stable environment.
-- Clear audio.
-- Normal lighting.
+- Stable environment
+- Clear audio
+- Normal lighting
 
 ### Medium Pressure
 
-- Slight visual distortion.
-- Louder breathing.
-- Increased ticking sounds.
-- Lighting flickers.
+- Slight visual distortion
+- Louder breathing
+- Increased ticking sounds
+- Lighting flickers
 
 ### High Pressure
 
-- Strong environmental distortion.
-- Overlapping voices.
-- Louder breathing.
-- Distorted memories.
+- Strong environmental distortion
+- Overlapping voices
+- Louder breathing
+- Distorted memories
 
 The player should still be able to complete the level without heavy punishment.
 
@@ -488,15 +536,13 @@ The player should still be able to complete the level without heavy punishment.
 
 # Level Ending
 
-The player returns to the living room.
+After the final memory, the office becomes silent.
 
-The house begins changing again.
-
-The father's belongings disappear.
+The father's belongings begin fading away.
 
 The room becomes empty.
 
-A family photograph remains on the table.
+A family photograph remains on the desk.
 
 The player picks it up.
 
@@ -508,12 +554,69 @@ The memory fades.
 
 The player places the photograph back.
 
-A doorway appears.
+A doorway appears inside the office.
 
-Behind it is a distorted version of the living room.
+Behind it is a distorted corridor leading deeper into the boy's memories.
 
 The player walks toward it.
 
 The screen fades to black.
 
 **Level 3 Complete.**
+
+---
+
+# Level 3 Assets
+
+## Environment
+
+- Father's office
+- Father's desk area
+- Photo area
+- Filing cabinet
+- Bookshelves
+- Office chair
+
+## Props
+
+- Work desk
+- Computer
+- Work documents
+- Bills
+- Receipts
+- Telephone
+- Work tools
+- Father's jacket
+- Car keys
+- Clock
+- Family photographs
+- Son's photograph
+- Notebook
+- Pens
+- Filing cabinet
+- Personal belongings
+
+## Audio
+
+- Clock ticking
+- Keyboard typing
+- Paper movement
+- Telephone sounds
+- Office ambience
+- Father's voice
+- Distorted argument dialogue
+- Breathing
+- Heartbeat
+- Memory distortion sounds
+
+## VFX
+
+- Memory fragments
+- Flickering lights
+- Distorted shadows
+- Environmental glitches
+- Fragment alignment effects
+- Memory transitions
+- Lighting changes
+- Screen distortion
+- Office transformation
