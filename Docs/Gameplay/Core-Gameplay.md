@@ -1,504 +1,375 @@
-# Level 4 — The Memory Timeline
+# Core Gameplay
 
 ## Overview
 
-Level 4 brings together everything the player has learned from the previous levels.
+The game is a psychological puzzle-adventure focused on exploration, environmental interaction, puzzle solving, memory reconstruction, and emotional decision-making.
 
-The player returns to a distorted version of the family living room.
+There is no combat.
 
-Unlike previous levels, the environment is almost completely frozen.
+The player's primary way of progressing is by exploring environments, examining objects, understanding clues, solving puzzles, reconstructing memories, and making choices.
 
-Objects, sounds, and memories from the previous levels appear together, creating a space that represents the boy's entire memory of the final evening.
+The core gameplay is designed around a small set of reusable mechanics that can be presented differently across each level.
 
-The goal is to reconstruct the complete sequence of events and accept that the past cannot be changed.
+The main gameplay activities are:
 
-The player must understand that:
-
-- The argument happened.
-- The father had his own responsibilities and concerns.
-- The boy was emotionally overwhelmed.
-- Both perspectives are part of the same event.
-- Understanding the past does not mean changing or excusing it.
-
----
-
-# Level Flow
-
-## Phase 1 — The Frozen Room
-
-The player enters the family living room.
-
-The environment appears frozen in time.
-
-Elements from previous levels are present:
-
-- Father's desk
-- Family photographs
-- Mother's tea cup
-- Boy's headphones
-- Father's coat
-- Car keys
-- Clock
-- Bills
-- Broken family photograph
-
-The room contains almost no normal environmental sound.
-
-Instead, the player hears:
-
-- Very faint breathing
-- A distant clock ticking
-- Occasional fragments of previous dialogue
-- Low environmental distortion
-
-The player notices that several important areas of the room are completely empty.
+- Exploration
+- Interaction
+- Object Inspection
+- Environmental Puzzle Solving
+- Memory Reconstruction
+- Emotional Choices
+- Progression
 
 ---
 
-# Phase 2 — The Timeline
+# Core Gameplay Loop
 
-The player discovers a large distorted section of the wall.
+The main gameplay loop is:
 
-It appears to be a visual representation of the evening.
+**Explore → Inspect → Discover → Understand → Solve / Choose → Progress**
 
-Five empty positions are visible.
+The player enters an environment and explores it to discover important objects, clues, and interactive elements.
 
-Each position represents one major stage of the event.
+The player examines these elements to understand their purpose and relationship to the environment.
 
-The timeline is initially unreadable.
+The information discovered through exploration is then used to:
 
-As the player investigates objects from previous levels, parts of the timeline become clearer.
+- Solve an environmental puzzle.
+- Reconstruct a memory.
+- Make an emotional choice.
+- Unlock a new area or interaction.
 
-The player must reconstruct the evening in chronological order.
+Successful completion causes the environment or memory to progress, allowing the player to continue.
 
----
-
-# Timeline Structure
-
-The timeline contains five stages:
-
-1. The Calm Before
-2. A Shift in Tone
-3. Words That Cut
-4. The Breaking Point
-5. A Step Into the Night
-
-Each stage requires the player to align the correct memory fragment with its corresponding position.
+The gameplay loop is repeated throughout the game, while the specific environment and objective change between levels.
 
 ---
 
-# Phase 3 — Reconstructing the Timeline
+# 1. Exploration
 
-## Memory 1 — The Calm Before
+Exploration is the primary way the player interacts with the game world.
 
-### Fragment
+The game uses contained environments rather than a large open world.
 
-Father's car keys.
+The player can:
 
-### Location
+- Move through the environment.
+- Examine different areas.
+- Search for important objects.
+- Observe environmental details.
+- Discover clues.
+- Revisit previously explored areas.
+- Find optional interactions.
 
-First timeline position.
+Exploration should encourage observation and curiosity.
 
-### Meaning
+The environment itself provides information that helps the player understand what they are supposed to do.
 
-The keys represent the beginning of the evening before the conflict.
-
-### Memory
-
-The father arrives home.
-
-He places his keys down and enters the house.
-
-The environment is calm.
-
-The player briefly sees the family home before anything goes wrong.
-
-After the memory ends, the timeline stabilizes slightly.
+The game should avoid relying heavily on objective markers or constant UI guidance.
 
 ---
 
-# Memory 2 — A Shift in Tone
+# 2. Interaction
 
-### Fragment
+The player can interact with specific objects and environmental elements.
 
-Mother's tea cup.
+Interactions are used to:
 
-### Location
+- Examine objects.
+- Activate mechanisms.
+- Trigger memories.
+- Discover clues.
+- Progress puzzles.
+- Open or unlock areas.
+- Trigger dialogue or responses.
 
-Second timeline position.
+Important interactive objects should be distinguishable from ordinary environmental decoration without making every interaction heavily highlighted.
 
-### Meaning
-
-The tea cup represents the ordinary family moment before the conversation becomes serious.
-
-### Memory
-
-The family is together.
-
-The conversation begins normally.
-
-The atmosphere gradually changes as the father begins talking to his son about the issue that has been building between them.
-
-The memory ends before the argument fully begins.
+Interactions should generally have a clear purpose.
 
 ---
 
-# Memory 3 — Words That Cut
+# 3. Object Inspection
 
-### Fragment
+Object inspection is a major part of exploration.
 
-Boy's headphones.
+The player can examine important objects to discover information that may be useful for understanding the environment or solving a puzzle.
 
-### Location
+An inspection may provide:
 
-Third timeline position.
+- Visual information.
+- A short description.
+- Dialogue.
+- Audio.
+- A clue.
+- A memory-related reaction.
+- Information about another object or event.
 
-### Meaning
+Objects are not treated primarily as collectibles.
 
-The headphones represent the son's attempt to shut out the conversation.
+Their main purpose is to provide information or create an interaction with the environment.
 
-### Memory
-
-The conversation becomes an argument.
-
-The father tries to make his point.
-
-The son becomes frustrated and defensive.
-
-The same emotional conflict from Level 2 is shown again, but with more context from Level 3.
-
-The player hears:
-
-> "I'm trying to help you."
-
-The boy responds emotionally:
-
-> "You never listen to me!"
-
-The memory becomes distorted and ends.
+The player should be able to understand an object's significance through context rather than through explicit labels.
 
 ---
 
-# Memory 4 — The Breaking Point
+# 4. Environmental Puzzle System
 
-### Fragment
+Puzzles are integrated into the environment.
 
-Cracked family photograph.
+The player solves puzzles by observing relationships between:
 
-### Location
+- Objects.
+- Locations.
+- Sequences.
+- Symbols.
+- Environmental clues.
+- Memory information.
 
-Fourth timeline position.
+Puzzles should be connected to the environment rather than functioning as unrelated mini-games.
 
-### Meaning
+### Puzzle Design Principles
 
-The photograph represents the emotional damage caused by the argument.
+Puzzles should:
 
-### Memory
+- Reward observation.
+- Require the player to understand clues.
+- Use information discovered during exploration.
+- Have logical solutions.
+- Avoid unnecessary complexity.
+- Avoid requiring random guessing.
+- Provide clear feedback when solved.
 
-The argument reaches its most intense point.
-
-Both characters are emotionally overwhelmed.
-
-The father is frustrated and concerned.
-
-The boy feels trapped and misunderstood.
-
-Neither side is able to properly communicate what they are feeling.
-
-The scene ends with silence.
-
-The player sees the boy preparing to leave.
-
----
-
-# Memory 5 — A Step Into the Night
-
-### Fragment
-
-Father's coat.
-
-### Location
-
-Fifth timeline position.
-
-### Meaning
-
-The coat represents the moment the argument leaves the house and becomes connected to the accident.
-
-### Memory
-
-The boy walks toward the entrance.
-
-The father follows him.
-
-The father says:
-
-> "Wait."
-
-The boy responds:
-
-> "Just leave me alone."
-
-The door opens.
-
-The boy leaves.
-
-The father remains inside for a moment before moving toward the door.
-
-The sound of the outside world becomes louder.
-
-The player hears:
-
-- Footsteps
-- Car door
-- Engine starting
-- Heavy breathing
-- Tires
-- Car horn
-- Impact
-
-The screen cuts to black.
+The player should generally be able to determine a solution by paying attention to the environment.
 
 ---
 
-# Phase 4 — The Timeline Rejects the Past
+# 5. Memory Reconstruction
 
-The player returns to the frozen room.
+Memory reconstruction is one of the game's primary gameplay mechanics.
 
-The timeline is now complete.
+The player may encounter incomplete or distorted memories that must be reconstructed using information discovered through exploration.
 
-However, one memory begins to distort.
+Reconstruction can involve:
 
-The player can interact with the harshest memory.
+- Determining chronological order.
+- Matching a memory to a location.
+- Connecting an object to an event.
+- Aligning a memory fragment with the environment.
+- Connecting multiple memory fragments.
 
-A prompt appears:
+The specific reconstruction method can vary between levels.
 
-> **Remove Memory**
+The underlying goal remains the same:
 
-The player interacts with it.
+**Use discovered information to restore an incomplete memory.**
 
-The memory fragment begins to separate from the timeline.
+### Successful Reconstruction
 
-For a moment, the environment becomes peaceful.
+When a memory is correctly reconstructed:
 
-The argument disappears.
-
-The room looks normal.
-
-The player appears to have removed the painful memory.
-
-Then the environment begins breaking apart.
-
-The same sounds return:
-
-- Father's voice
-- Boy's voice
-- Door closing
-- Engine
-- Tires
-- Impact
-
-The memory fragment returns to its original position.
-
-A message appears:
-
-> **"You cannot remove what happened."**
+- The game provides visual or audio feedback.
+- The memory becomes clearer.
+- A memory sequence may play.
+- The player receives additional information.
+- The level progresses.
 
 ---
 
-# Phase 5 — Acceptance
+# 6. Choice System
 
-The player approaches the memory again.
+Some gameplay sections use emotional choices instead of traditional puzzles.
 
-This time, there is no option to remove it.
+Choices allow the player to determine how the character responds to an emotional situation or memory.
 
-The only interaction is:
+Choices may affect:
 
-> **Accept Memory**
+- Dialogue.
+- Character responses.
+- Immediate memory presentation.
+- The player's Emotional Pressure.
+- Visual or audio presentation.
 
-The player confirms.
+Choices do not need to create completely separate story paths.
 
-The timeline stabilizes.
+Major progression can remain consistent while the immediate response and presentation change.
 
-The distorted room becomes quiet.
+This keeps the system manageable while still allowing the player to participate in the character's emotional decisions.
 
-The five memories remain visible, but they are no longer fragmented.
+### Choice Design Principles
 
-The player finally sees the entire evening as one connected event.
+Choices should:
 
----
-
-# Final Memory
-
-A final short sequence plays.
-
-The player sees the father standing alone at the entrance after the boy leaves.
-
-The father looks toward the door.
-
-He quietly says:
-
-> "Wait. Don't go."
-
-The scene fades before the accident is shown again.
-
-This time, the voice sounds worried rather than angry.
+- Represent different emotional responses.
+- Have meaningful differences.
+- Avoid obvious "correct" answers.
+- Affect the immediate situation.
+- Support the player's emotional interpretation.
+- Converge when necessary to maintain the main progression.
 
 ---
 
-# Emotional Pressure
+# 7. Progression
 
-Level 4 represents one of the highest emotional points of the game.
+Gameplay progression is based on completing meaningful interactions and objectives.
 
-Pressure increases when:
+A typical progression sequence is:
 
-- The timeline is incomplete
-- The player confronts the argument
-- The Breaking Point memory plays
-- The accident memory begins
-- The player attempts to remove the painful memory
+1. Explore the environment.
+2. Discover relevant information.
+3. Understand the relationship between clues.
+4. Complete a puzzle, reconstruction, or choice.
+5. Trigger the resulting gameplay event.
+6. Unlock the next section.
 
-Pressure decreases when:
+Progress should primarily be communicated through the environment and gameplay rather than constant UI instructions.
 
-- Memories are correctly reconstructed
-- The player completes the timeline
-- The player accepts the final memory
+Examples of progression feedback include:
 
-Memory fragments themselves do not automatically increase Pressure.
-
----
-
-# Pressure States
-
-## Low Pressure
-
-- Frozen environment remains stable
-- Clear memory fragments
-- Quiet ambience
-
-## Medium Pressure
-
-- Timeline flickers
-- Memories overlap slightly
-- Previous dialogue can be heard in the background
-
-## High Pressure
-
-- Multiple voices overlap
-- Lighting becomes unstable
-- Heartbeat becomes louder
-- Timeline fragments shake
-- Environment begins distorting
-
-## Maximum Pressure
-
-The timeline collapses.
-
-The screen fades to black.
-
-The player returns to the latest checkpoint.
+- A door unlocking.
+- A new area becoming accessible.
+- A memory becoming complete.
+- A new interaction becoming available.
+- An environmental state changing.
 
 ---
 
-# Phase 6 — Transition
+# 8. Checkpoints
 
-After accepting the final memory, the family home begins disappearing.
+Checkpoints prevent the player from losing excessive progress after failure.
 
-The walls fade into darkness.
+A checkpoint can be created after a significant gameplay milestone such as:
 
-The timeline remains floating for a few seconds.
+- Completing a major puzzle.
+- Completing a memory reconstruction.
+- Completing an important choice sequence.
+- Entering a major gameplay section.
 
-The five memories slowly disappear one by one.
+If a gameplay failure occurs, the player returns to the most recent checkpoint.
 
-The final thing remaining is the sound of the hospital monitor.
+Checkpoints should minimize unnecessary repetition.
 
-The player hears:
-
-> Beep...
-
-Silence.
-
-> Beep...
-
-The screen fades to black.
-
-A hospital light appears.
-
-The game transitions into **Level 5 — The Hospital Reveal**.
+Previously completed major sections should not need to be repeated unless required by the gameplay design.
 
 ---
 
-# Level 4 Assets
+# 9. Player Feedback
 
-## Environment
+The game provides feedback whenever the player performs an important action.
 
-- Distorted family living room
-- Frozen timeline wall
-- Hallway
-- Main entrance
-- Transition space to hospital
+Feedback can be:
 
-## Props
+### Visual
 
-- Father's car keys
-- Mother's tea cup
-- Boy's headphones
-- Cracked family photograph
-- Father's coat
-- Family photographs
-- Clock
-- Telephone
-- Bills
-- Existing Level 2 and Level 3 props
+- Object changes.
+- Symbols activating.
+- Doors opening.
+- Memory stabilization.
+- Environmental reactions.
+- Interaction indicators.
 
-## Audio
+### Audio
 
-- Clock ticking
-- Low room ambience
-- Previous dialogue fragments
-- Father's voice
-- Boy's voice
-- Footsteps
-- Door opening and closing
-- Car engine
-- Tires
-- Car horn
-- Impact
-- Heartbeat
-- Hospital monitor
+- Confirmation sounds.
+- Rejection sounds.
+- Character responses.
+- Environmental sounds.
+- Memory audio.
 
-## VFX
+### Environmental
 
-- Memory fragments
-- Timeline distortion
-- Flickering lights
-- Frozen environmental effects
-- Fragment alignment effects
-- Memory transitions
-- Screen distortion
-- Timeline collapse
-- Fade to hospital
+- Objects moving.
+- Areas becoming accessible.
+- Environmental elements changing.
+- Memory scenes appearing.
+- New interactions becoming available.
+
+Feedback should communicate whether the player's action was successful without relying entirely on UI.
 
 ---
 
-# Core Purpose of Level 4
+# 10. Incorrect Actions
 
-**Level 2 asks:**
+Incorrect actions should generally provide feedback rather than severe punishment.
 
-> "What happened?"
+Depending on the gameplay mechanic, an incorrect action may:
 
-**Level 3 asks:**
+- Produce a visual rejection.
+- Play a distorted or incorrect sound.
+- Reset part of a puzzle.
+- Trigger a small environmental reaction.
+- Slightly affect the player's current state.
 
-> "Why might the father have acted this way?"
+The player should understand that the action was incorrect and be able to try again.
 
-**Level 4 asks:**
+Normal experimentation should not be heavily punished.
 
-> "Can the past be changed?"
+---
 
-The answer is no.
+# Core Gameplay Principles
 
-The player cannot erase the argument, the accident, or the painful memories.
+## 1. Exploration Has Purpose
 
-They can only understand them and accept that they happened.
+The player explores to discover information that can be used for gameplay progression.
 
-The level prepares the player for the major reveal in **Level 5 — The Hospital Reveal**.
+## 2. The Environment Is Part of the Gameplay
+
+Important information should be communicated through the environment rather than relying entirely on UI.
+
+## 3. Memories Are Interactive
+
+Memories are not only cinematic story sequences.
+
+They can also function as gameplay elements that the player must understand, reconstruct, or interact with.
+
+## 4. Puzzles Reward Understanding
+
+The player should solve puzzles by observing and understanding the environment rather than guessing.
+
+## 5. Choices Represent Emotion
+
+Choices are primarily used to express emotional responses rather than create unnecessarily complex branching paths.
+
+## 6. Failure Provides Feedback
+
+Incorrect actions should teach the player what does not work rather than simply stopping progression.
+
+## 7. Mechanics Are Reusable
+
+The core mechanics should be reusable across multiple levels while allowing each level to present them differently.
+
+---
+
+# Core Gameplay Summary
+
+The player's primary activities throughout the game are:
+
+**Explore**
+
+↓
+
+**Inspect**
+
+↓
+
+**Discover Clues**
+
+↓
+
+**Understand**
+
+↓
+
+**Solve / Reconstruct / Choose**
+
+↓
+
+**Receive Feedback**
+
+↓
+
+**Progress**
+
+The game focuses on psychological exploration and puzzle-solving rather than combat or traditional action gameplay.
+
+The player's main challenge is understanding the environment, connecting information, reconstructing memories, and making emotional decisions.
