@@ -20,15 +20,19 @@ There is no combat. The primary gameplay focuses on understanding the environmen
 
 The game follows a young man who has a painful argument with his parents, particularly his father.
 
-Overwhelmed by anger and frustration, he leaves home and gets into a car accident.
+Overwhelmed by anger and frustration, he leaves home on a dark and rainy night. While crossing the street, a car approaches at high speed and is about to hit him. His father runs after him and pushes him out of the way, taking the impact himself.
 
-He survives the accident but falls into a coma.
+The protagonist survives the accident but falls into a coma, while his father is left seriously injured.
 
 Inside the coma, his mind creates a strange psychological world based on his memories, emotions, guilt, and regrets. The world takes the form of distorted versions of familiar places, including a hospital, his family home, his father's office, and other memory spaces.
 
+The game begins with the protagonist in the hospital, sitting beside his injured father. Feeling regret over the argument and what happened, he eventually falls asleep on a couch beside his father's bed. During this sleep, he relives the accident as a vivid memory.
+
+After waking from the memory, the protagonist wakes from the nap and begins exploring the strange hospital world.
+
 The player knows from the beginning that the protagonist is in a coma. The mystery is not whether he is dreaming, but **why his mind has trapped him inside these memories and what he needs to confront in order to wake up.**
 
-Throughout the game, the player explores these environments and gradually reconstructs what happened before the accident.
+Throughout the game, the player explores these environments and gradually reconstructs what happened before and around the accident.
 
 The protagonist initially sees the argument mainly from his own perspective. As he progresses, he begins to understand his father's perspective and realizes that both of them contributed to the conflict in different ways.
 
@@ -64,8 +68,8 @@ The game is divided into five main levels.
 Each level represents a different stage of the protagonist's emotional journey.
 
 | Level   | Location | Main Theme | Main Purpose |
-| Level 1 | Hospital That Feels Wrong | Confusion | Introduce the coma and core gameplay |
-| Level 2 | The Last Evening | Memory | Reconstruct the events before the accident |
+| Level 1 | The Hospital That Feels Wrong | Confusion | Introduce the coma, the father's condition, and the core gameplay |
+| Level 2 | The Last Evening | Memory | Reconstruct the events surrounding the argument and the moments leading to the accident |
 | Level 3 | The Father's Office | Understanding | Discover the father's perspective |
 | Level 4 | The Conversation | Acceptance | Confront the emotional conflict |
 | Level 5 | The Wake Up | Resolution | Return to reality and reconcile with family |
@@ -80,13 +84,31 @@ The levels gradually shift from discovering **what happened** to understanding *
 
 ### Theme
 
-**Confusion, fear, and realization**
+**Confusion, guilt, fear, and realization**
 
-The player wakes up in a strange hospital environment after the accident.
+The player begins in a strange hospital environment beside his injured father.
+
+At the start of the game, the protagonist is sitting beside his father's hospital bed. He feels regret about the argument they had before the accident and struggles with what happened.
+
+Unable to stay awake, he lies down on a couch beside his father's bed and falls asleep.
+
+The player then experiences a vivid memory of the accident.
+
+The memory shows:
+
+- The argument between the protagonist and his father.
+- The protagonist leaving the house.
+- The dark and rainy night.
+- The protagonist crossing the street.
+- A fast-moving car approaching him.
+- His father pushing him out of the way.
+- His father taking the impact of the car.
+
+The protagonist then wakes from the nap and returns to the hospital environment.
 
 The hospital looks familiar but feels wrong. There are no doctors, nurses, or other patients.
 
-The player explores the room and begins noticing objects connected to his identity and recent memories.
+The player explores the room and begins noticing objects connected to his identity, his family, and his memories.
 
 The player eventually finds a hospital bracelet with his own name and realizes that he is the patient.
 
@@ -133,9 +155,11 @@ Solving the puzzle opens the symbolic hospital door.
 
 The player enters a distorted version of the family home.
 
-The goal is to reconstruct the sequence of events that occurred before the accident.
+The goal is to reconstruct the sequence of events that occurred during the evening before the accident.
 
-Instead of directly showing the argument, the player discovers fragments of the evening and determines where they belong based on environmental clues.
+Although the player has already experienced a fragmented memory of the accident in Level 1, this level gives a more complete picture of the evening and allows the player to understand what led to the argument.
+
+Instead of directly showing the entire argument at once, the player discovers fragments of the evening and determines where they belong based on environmental clues.
 
 ### Gameplay Focus
 
@@ -161,9 +185,9 @@ Correct placement triggers a short memory sequence.
 
 Incorrect placement causes a brief distortion and small increase in Emotional Pressure.
 
-The final memory reveals the protagonist leaving the house immediately before the accident.
+The final memory connects the argument to the protagonist leaving the house and the accident that was shown earlier in Level 1.
 
-The level ends with the realization that the argument was the final event before the crash.
+The level ends with the realization that the argument was the final event before the crash and that there is more to understand about what happened between the protagonist and his father.
 
 ---
 
