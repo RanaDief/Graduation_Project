@@ -4,16 +4,18 @@
 
 Level 1 is the player's introduction to the psychological world.
 
-The player wakes up in a hospital after the accident. He is confused and initially does not understand where he is. Through exploration, he discovers that he is the patient and that he is currently in a coma.
+The player begins in a hospital room beside his father, who is lying injured on a hospital bed after the accident. The player feels regret about the argument he had with his father before the accident. Exhausted and emotionally overwhelmed, he lies down on the couch beside his father and falls asleep.
 
-The level then introduces the connection between the hospital and his memories.
+While sleeping, the player experiences a dream-like memory of the accident. He relives the argument with his father, leaves the house on a dark and rainy night, and is nearly hit by a speeding car while crossing the street. His father pushes him out of the way and takes the impact himself.
+
+The player wakes up from the nap and begins the playable part of the level. The level then introduces the connection between the hospital and his memories.
 
 The main goal of the level is to establish:
 
-- The player is in a coma.
-- The player needs to wake up.
+- The player has a strong emotional connection to his father.
+- The argument before the accident is an important part of the player's memories.
+- The accident is connected to the player's painful memories.
 - His memories are connected to the world around him.
-- The accident is connected to the memories he is experiencing.
 - There are both positive and painful memories.
 - The player must explore and confront his memories to progress.
 
@@ -21,74 +23,126 @@ The main goal of the level is to establish:
 
 # Level Flow
 
-## Phase 1 — Waking Up
+## Phase 1 — Hospital Opening
 
 ### Starting State
 
-The player begins lying inside a hospital bed.
+The game begins inside a hospital room.
 
-The screen is completely black.
+The player is sitting beside his father, who is lying injured on a hospital bed after the accident.
+
+The player is not initially controllable.
 
 The player can hear:
 
-- Heavy breathing.
-- A faint heartbeat.
+- The father's breathing.
+- A faint heartbeat and heart monitor.
+- Rain hitting the hospital window.
 - Distant hospital ambience.
 - A quiet electrical hum.
 
-The screen slowly fades in.
+The room is quiet and emotionally heavy.
 
-The player's vision is blurry.
-
-The player does not immediately understand where he is.
-
-### Accident Flash
-
-Before the player can fully react, fragmented memories of the accident appear.
-
-The player sees very short flashes:
-
-1. A dark road.
-2. Headlights.
-3. Hands gripping a steering wheel.
-4. Screeching tires.
-5. A sudden impact.
-
-The flashes are extremely short and incomplete.
-
-The player suddenly wakes up and sits upright in the bed.
-
-His breathing becomes heavy.
-
-He looks around the room.
-
-### Player Reaction
-
-The player is initially frantic.
-
-He checks himself and looks around the room.
-
-He touches his head and body, making sure he is not injured or still inside the car.
-
-After a few seconds, he realizes that he is no longer in immediate danger.
-
-He slowly calms down.
-
-The player looks around the room again.
-
-He realizes he is inside a hospital.
+The player looks at his father and feels regret about what happened between them.
 
 Possible dialogue:
 
-> "Where am I?"
+> "I'm sorry, Dad..."
 
-Pause.
+The player remains beside his father for a moment. He is exhausted and emotionally overwhelmed.
 
-> "The accident..."
+There is a couch beside the hospital bed.
 
-The player remembers the crash but cannot remember what happened afterward.
+The player sits down on the couch and looks at his father one more time.
 
-The player gets out of the bed.
+He lies down on the couch and slowly falls asleep.
+
+### Accident Dream / Memory
+
+The screen slowly fades to black.
+
+The player hears:
+
+- Heavy rain.
+- Thunder.
+- Distant traffic.
+- Heavy breathing.
+
+The player opens his eyes and finds himself back at home.
+
+It is a dark and rainy night.
+
+The player is standing inside the house with his father.
+
+He is reliving the argument that happened before the accident.
+
+The argument becomes more intense.
+
+Possible dialogue:
+
+> "You never listen to me."
+
+The player responds angrily.
+
+> "Because you never listen to me either!"
+
+The argument ends with the player deciding to leave the house.
+
+His father tries to stop him.
+
+> "Wait!"
+
+The player ignores him and leaves.
+
+### The Accident
+
+The player walks outside into the dark, rainy night.
+
+Rain falls heavily and the streets are wet.
+
+The player walks toward the street while still angry and distracted by the argument.
+
+He begins crossing the street.
+
+A car suddenly approaches at high speed.
+
+The player hears a loud horn and turns toward the car.
+
+The car is about to hit him.
+
+Everything slows down.
+
+His father runs toward him and pushes him out of the car's path.
+
+The player falls away from the road.
+
+His father is hit by the car.
+
+The player sees the impact.
+
+The screen flashes white.
+
+The sound suddenly disappears.
+
+The memory ends.
+
+### Waking Up
+
+The player suddenly wakes up on the hospital couch.
+
+His breathing becomes heavy.
+
+He looks around the room in confusion.
+
+He immediately looks toward his father on the hospital bed.
+
+The player slowly realizes that the accident he just experienced was a memory of what happened.
+
+He looks at his father with guilt and regret.
+
+The player stands up from the couch.
+
+The player is now fully in control and the playable part of Level 1 begins.
 
 ---
 
