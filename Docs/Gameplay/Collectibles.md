@@ -106,3 +106,5 @@ Short Description
 Memory Echo
     ↓
 Continue Exploring
+
+in silent hill "glimpses of the past"
