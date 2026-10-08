@@ -160,13 +160,21 @@ AWWNS_PlayerController
 
 ### Responsibilities
 
-- Player input
-- UI routing
-- Camera state
-- Input mode switching
+- Player input routing and context switching via UE5 Enhanced Input
+- UI routing and cursor management
+- Camera state management (blending between player camera and inspection view targets)
+- Input mode switching (Game Only vs. Game & UI)
 - First-person exploration state
 - Fixed-camera or inspection state
 - Interaction input forwarding
+
+### Enhanced Input Architecture
+
+The Player Controller leverages UE5's **Enhanced Input** subsystem (`UEnhancedInputLocalPlayerSubsystem`) to handle state-based input mapping cleanly without boolean flags in tick functions:
+
+- **`IMC_Default` (Priority 0):** Exploration controls (WASD movement, camera look, jump, interact).
+- **`IMC_Inspection` (Priority 1):** Inspection controls (object rotation, zoom, release/put down). When entering inspection mode, `IMC_Inspection` is pushed at a higher priority (or replaces `IMC_Default`), remapping mouse delta to object rotation.
+- **`IMC_Puzzle` (Priority 1):** Sentence reconstruction and puzzle interactions, routing mouse input to UI or interactive puzzle elements and enabling the cursor.
 
 The Player Controller should not contain puzzle-specific logic.
 
@@ -417,19 +425,24 @@ This keeps the Memory Echo system reusable.
 ### Data Asset
 
 ```text
-DA_MemoryEcho
+DA_MemoryEcho (UPrimaryDataAsset)
 ```
 
 Example fields:
 
 ```text
-EchoAudio
-EchoVFX
-PressureDelta
-SubtitleText
+EchoAudio (TSoftObjectPtr<USoundBase>)
+EchoVFX (TSoftObjectPtr<UNiagaraSystem>)
+PressureDelta (float)
+SubtitleText (FText)
 ```
 
-Additional fields can be added later if required.
+### Soft Object References & Memory Optimization
+
+To maintain low memory footprint and prevent hitching across 5 levels, large presentation assets in Data Assets (audio tracks, voiceover lines, Niagara systems) must use **Soft Object References** (`TSoftObjectPtr`) rather than hard pointers (`TObjectPtr` / raw pointers):
+
+- Hard references force Unreal to load all referenced audio files and textures into RAM the moment the Data Asset itself is referenced.
+- Soft references keep the Data Asset lightweight. Assets are asynchronously streamed or loaded on-demand via `FStreamableManager` or `AsyncLoad` when the memory is within player proximity or triggered.
 
 The Data Asset allows different memory echoes to be configured without creating unique C++ classes.
 
@@ -528,16 +541,18 @@ Event      Distortion
 ### Data Asset
 
 ```text
-DA_SentencePuzzle
+DA_SentencePuzzle (UPrimaryDataAsset)
 ```
 
 Example fields:
 
 ```text
-AvailableFragments
-CorrectSequence
-OnSolvedEcho
+AvailableFragments (TArray<FText>)
+CorrectSequence (TArray<int32>)
+OnSolvedEcho (TSoftObjectPtr<UDA_MemoryEcho>)
 ```
+
+Using a soft reference for `OnSolvedEcho` ensures that memory data assets and their downstream audio/VFX are only loaded when the puzzle is completed.
 
 The same puzzle system can therefore support different sentence puzzles across the five levels.
 
@@ -584,22 +599,50 @@ Possible triggered events include:
 
 ## 21. Save System
 
-The save system stores persistent progression.
-
-Potential save data includes:
+### Save Data Container
 
 ```text
-Current Level
-Story Flags
-Completed Puzzles
-Discovered Memories
-Important Decisions
-Unlocked Content
+UWWNS_SaveGame (USaveGame)
 ```
 
-Save/load coordination is handled through the persistent game-state architecture.
+Serialized fields stored in the `.sav` file:
 
-`AWWNS_GameInstance` coordinates with the save system, while actual save data should be stored using Unreal's SaveGame system.
+```text
+CurrentLevelName (FName)
+StoryFlags (TArray<FName>)
+DiscoveredMemoryIDs (TArray<FName>)
+CompletedPuzzleIDs (TArray<FName>)
+PlayerStats / Decisions (TMap<FName, FString>)
+Timestamp (FDateTime)
+```
+
+### Subsystem Coordination Flow
+
+Save/load operations are coordinated cleanly by `USaveCoordinationSubsystem` without coupling individual gameplay actors directly to disk I/O:
+
+```text
+Save Request (Checkpoint / Level Transition)
+                   │
+                   ▼
+       USaveCoordinationSubsystem
+       ┌───────────┴───────────┐
+       ▼                       ▼
+UStoryProgressionSubsystem   UMemoryTrackingSubsystem
+(Story flags & current level) (Discovered echoes & puzzles)
+       └───────────┬───────────┘
+                   ▼
+          Populate UWWNS_SaveGame
+                   │
+                   ▼
+   UGameplayStatics::AsyncSaveGameToSlot (Non-blocking disk write)
+```
+
+**Loading Flow:**
+1. `USaveCoordinationSubsystem` calls `UGameplayStatics::AsyncLoadGameFromSlot`.
+2. On completion delegate, it unpacks `UWWNS_SaveGame`.
+3. It pushes story flags and level status into `UStoryProgressionSubsystem`.
+4. It pushes discovered memories and puzzle flags into `UMemoryTrackingSubsystem`.
+5. Systems notify gameplay via delegate if current level needs updating.
 
 ---
 
@@ -626,6 +669,13 @@ Each level should primarily contain:
 - Level-specific cinematics
 
 Reusable systems should remain outside individual level logic.
+
+### Multi-Developer Level Editing (One File Per Actor - OFPA)
+
+Because a 3-person team will be placing assets, lighting, audio triggers, and puzzle elements concurrently, master levels must have **One File Per Actor (OFPA)** enabled (standard in UE5 World Partition):
+
+- **Prevents Binary `.umap` Lockouts:** In traditional levels, any change marks the entire monolithic `.umap` file as dirty, preventing other team members from modifying the map without creating unresolvable binary Git conflicts.
+- **Granular Git Tracking:** With OFPA, each actor placed or modified in the level is serialized into its own separate external file (`__ExternalActors__` / `__ExternalObjects__`). Team members can simultaneously dress environments, set up lighting, and tune puzzle triggers in the same level without collision.
 
 ---
 
@@ -924,6 +974,7 @@ The architecture should minimize conflicts through modularization and clear owne
 - Use feature branches.
 - Use pull requests for major changes.
 - Avoid having multiple people edit the same Blueprint simultaneously when possible.
+- Enable One File Per Actor (OFPA) across all master levels so level design, triggers, and lighting can be authored simultaneously without .umap binary conflicts.
 - Keep systems modular.
 - Establish ownership of major systems.
 - Integrate changes regularly.
