@@ -200,6 +200,12 @@ The Player Character should remain lightweight.
 
 Puzzle logic, memory logic, pressure logic, and other systems should be implemented through dedicated components or external systems rather than continuously expanding the Player Character.
 
+### First-Person Camera Representation
+
+The game uses an **arms-only, floating first-person camera**. The camera is not attached to a visible full-body player mesh. This keeps exploration and close-up inspection stable, avoids body/camera clipping, and reduces animation and IK scope.
+
+A simple hidden shadow-proxy mesh may be used when body shadows are needed. It must not affect the first-person camera or interaction collision.
+
 ---
 
 ## 8. Interactable Base Class
@@ -290,6 +296,8 @@ Different objects can implement the interface differently without the Player Cha
 ## 11. Inspection System
 
 Inspection is treated as a modular interaction state.
+
+Inspected objects are hidden in the world and displayed in a dedicated isolated inspection scene or render-target viewport. This gives every object controlled lighting and rotation space, and prevents world geometry from clipping through it.
 
 When the player examines an object:
 
@@ -513,6 +521,15 @@ I / didn't / mean / to / hurt / you
 
 The system checks the player's sequence against the correct sequence.
 
+### Retry and Hint Policy
+
+A failed attempt is registered only when the player submits a complete sentence. Moving fragments never adds Emotional Pressure.
+
+- On each failed submission, reset the sentence, play a short distorted memory or voice response, and add **5 Pressure**.
+- Cap the total penalty for one sentence puzzle at **15 Pressure**.
+- Initially reject the whole sentence rather than marking every incorrect fragment; the puzzle should reward interpretation of the evidence, not brute force.
+- After three failed submissions, replay or emphasize a relevant Memory Echo/environmental clue and subtly pulse one key fragment or clue. The hint guides attention without revealing the complete solution.
+
 ### Possible Flow
 
 ```text
@@ -654,7 +671,7 @@ The game contains five main levels:
 L_01_ConfusionDenial
 L_02_ReconstructingPast
 L_03_FathersWeight
-L_04_ThreePerspectives
+L_04_TheConversation
 L_05_TruthAndAcceptance
 ```
 
@@ -699,7 +716,7 @@ Initialize Level 2 GameMode
 
 Within-level environmental changes should not automatically require separate streamed levels.
 
-For example, Level 4's three perspectives can be implemented as states or environment transformations within the same level unless technical requirements later justify streaming.
+Level 4 remains in the protagonist's player pawn. Its emotional and narrative perspective changes are expressed through dialogue, camera work, environmental transformations, and Sequencer events rather than possessing separate husband, wife, and child pawn classes. This preserves the shared interaction state and avoids unnecessary possession transitions.
 
 ---
 
@@ -856,7 +873,7 @@ Graduation_Project/
 │   │   ├── L_01_ConfusionDenial/
 │   │   ├── L_02_ReconstructingPast/
 │   │   ├── L_03_FathersWeight/
-│   │   ├── L_04_ThreePerspectives/
+│   │   ├── L_04_TheConversation/
 │   │   └── L_05_TruthAndAcceptance/
 │   │
 │   ├── UI/
@@ -980,6 +997,16 @@ The architecture should minimize conflicts through modularization and clear owne
 - Integrate changes regularly.
 - Communicate before modifying shared core assets.
 - Keep reusable logic separate from level-specific content.
+
+### System Ownership
+
+| Team Member | Primary Ownership |
+| --- | --- |
+| **Rana Dief — Core Gameplay & Interaction** | Player Character and Controller, Enhanced Input, interaction component and interfaces, inspectable/interactable objects, object inspection, and pickup/drop mechanics. |
+| **Osma Alashri — Gameplay Systems & Progression** | Puzzle framework and sentence reconstruction, Memory Echoes, story events, progression, Emotional Pressure, checkpoints, and save/load. |
+| **Mahmoud Amr — Environment, 3D & Integration** | Character and environment models, materials, lighting, environmental transformations, audio/VFX integration, and level-side integration of gameplay triggers. |
+
+Cross-system communication must use interfaces, event dispatchers, and data assets. The owning developer approves changes to their reusable system before it is altered by another team member.
 
 ### Important Clarification
 

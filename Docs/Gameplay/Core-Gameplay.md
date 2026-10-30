@@ -67,6 +67,12 @@ The environment itself provides information that helps the player understand wha
 
 The game should avoid relying heavily on objective markers or constant UI guidance.
 
+### Locomotion and Accessibility
+
+The player has a deliberate walking pace; sprinting is not included because it conflicts with the intended exploratory pacing. Crouching is not required unless a level later introduces a specific navigation need.
+
+Head bob and non-essential camera shake must be separately toggleable in accessibility settings. These settings affect presentation only and must not change puzzle solutions or progression.
+
 ---
 
 # 2. Interaction
@@ -86,6 +92,10 @@ Interactions are used to:
 Important interactive objects should be distinguishable from ordinary environmental decoration without making every interaction heavily highlighted.
 
 Interactions should generally have a clear purpose.
+
+### Interaction Feedback
+
+When the player looks at an interactable within range, a small center reticle changes state and the object receives a subtle custom-depth outline. The reticle confirms reach and action; the outline makes the target readable without turning the environment into a field of permanent UI markers.
 
 ---
 
