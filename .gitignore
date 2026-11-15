@@ -1,0 +1,13 @@
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+.idea/
+*.sln
+*.code-workspace
+*.suo
+
+# Local setup output and previous-work location
+Build/*.log
+Docs/PreviousPrototype.txt

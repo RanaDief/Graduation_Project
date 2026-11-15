@@ -1,0 +1,10 @@
+{
+  "saved_assets": [
+    "/Game/WordsWeNeverSaid/Core/BP_GameInstance.BP_GameInstance",
+    "/Game/WordsWeNeverSaid/Core/BP_GameMode.BP_GameMode",
+    "/Game/WordsWeNeverSaid/Maps/Development/L_Development.L_Development"
+  ],
+  "map_loaded": true,
+  "actor_count": 3,
+  "custom_gameplay": false
+}
