@@ -25,3 +25,8 @@
 *.cpp text eol=lf
 *.h   text eol=lf
 *.ini text eol=lf
+
+# Memory Echo assets stored as regular Git binaries
+Content/Blueprints/Memory/MemoryEcho/Data/*.uasset -filter -diff -merge -text
+Content/Blueprints/Memory/MemoryEcho/Enums/*.uasset -filter -diff -merge -text
+Content/Blueprints/Memory/MemoryEcho/Structs/*.uasset -filter -diff -merge -text
