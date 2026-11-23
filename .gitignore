@@ -85,3 +85,20 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# IDE generated files
+.vscode/c_cpp_properties.json
+.vscode/compileCommands*.json
+.vscode/*.sln
+.vscode/*.suo
+.vscode/*.db
+
+# Unreal generated build files
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+.vs/
+.vscode/compileCommands_WordsWeNeverSaid
+.vscode/compileCommands_Default
+.ignore
