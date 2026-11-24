@@ -12,6 +12,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MemoryEchoDataAsset.h"
 #include "MemoryEchoSubsystem.h"
+#include "TimerManager.h"
 #include "WWNSLogLibrary.h"
 
 AMemoryEchoTrigger::AMemoryEchoTrigger()
@@ -144,7 +145,38 @@ void AMemoryEchoTrigger::OnInteractPressed()
 {
     if (bPlayerInRange)
     {
+        Interact();
+    }
+}
+
+void AMemoryEchoTrigger::Interact()
+{
+    if (bPlayPending || bEchoPlaying)
+    {
+        return;
+    }
+
+    // No lead-in when there is nothing to lead into, or when it is switched off.
+    if (!bEnableEchoVisuals || PresentationDelaySeconds <= 0.0f || bHasPlayed || !Memory)
+    {
         PlayMemory();
+        return;
+    }
+
+    bPlayPending = true;
+    BeginEchoVisuals();
+    GetWorldTimerManager().SetTimer(
+        PendingPlayTimer, this, &AMemoryEchoTrigger::FinishPendingPlay, PresentationDelaySeconds, false);
+}
+
+void AMemoryEchoTrigger::FinishPendingPlay()
+{
+    bPlayPending = false;
+
+    // If the subsystem refuses after all, do not leave the look hanging.
+    if (!PlayMemory())
+    {
+        EndEchoVisuals();
     }
 }
 
@@ -183,7 +215,10 @@ bool AMemoryEchoTrigger::PlayMemory()
     if (bActivated)
     {
         bHasPlayed = true;
-        BeginEchoVisuals();
+        if (!bEchoPlaying)
+        {
+            BeginEchoVisuals();
+        }
     }
     else
     {
@@ -315,7 +350,7 @@ void AMemoryEchoTrigger::Tick(float DeltaSeconds)
     EchoAlpha = FMath::FInterpConstantTo(EchoAlpha, bEchoPlaying ? 1.0f : 0.0f, DeltaSeconds, FadeSpeed);
 
     // Invite interaction only while there is still a memory to play.
-    const bool bInvite = bPlayerInRange && !bHasPlayed;
+    const bool bInvite = bPlayerInRange && !bHasPlayed && !bPlayPending;
     RangeAlpha = FMath::FInterpConstantTo(RangeAlpha, bInvite ? 1.0f : 0.0f, DeltaSeconds, 2.0f);
 
     PulseTime += DeltaSeconds;

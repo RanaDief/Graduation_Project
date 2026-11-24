@@ -102,6 +102,22 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0"))
     float MaxEchoVisualSeconds = 30.0f;
 
+    /**
+     * Seconds between interacting and the memory screen appearing. The flash
+     * and the fade into the memory look play in this gap, so they are seen
+     * before the presentation covers the view. 0 shows the screen at once.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0"))
+    float PresentationDelaySeconds = 1.0f;
+
+    /**
+     * What the interact key does: starts the echo visuals, then plays the
+     * memory after PresentationDelaySeconds. Call this from the real
+     * interaction system; use PlayMemory to skip the lead-in.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Memory Echo")
+    void Interact();
+
     /** Close the echo: removes the presentation this trigger created and ends the look. */
     UFUNCTION(BlueprintCallable, Category = "Memory Echo")
     void DismissEcho();
@@ -139,6 +155,7 @@ private:
     void OnInteractPressed();
 
     void BeginEchoVisuals();
+    void FinishPendingPlay();
     void EnsurePresentation();
     void TearDownPresentation();
     void UpdateTickEnabled();
@@ -161,6 +178,8 @@ private:
     UPROPERTY(Transient)
     TObjectPtr<UActorComponent> SpawnedPresentation;
 
+    FTimerHandle PendingPlayTimer;
+    bool bPlayPending = false;   // visuals started, memory screen not shown yet
     bool bEchoPlaying = false;   // memory look is on
     bool bHasPlayed = false;     // stop inviting interaction once the memory is spent
     float EchoAlpha = 0.0f;      // 0..1 blend of the memory look
