@@ -1,23 +1,83 @@
 
 #include "MemoryEchoTrigger.h"
 
-#include "Camera/PlayerCameraManager.h"
-#include "Components/PointLightComponent.h"
-#include "Components/PostProcessComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/InputComponent.h"
 #include "Engine/GameInstance.h"
+#include "Engine/GameViewportClient.h"
+#include "Engine/Texture2D.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "MemoryEchoDataAsset.h"
 #include "MemoryEchoSubsystem.h"
+#include "Rendering/DrawElements.h"
+#include "Styling/CoreStyle.h"
+#include "TextureResource.h"
 #include "TimerManager.h"
 #include "WWNSLogLibrary.h"
+#include "Widgets/SLeafWidget.h"
+
+/**
+ * Full-screen overlay that draws the darkness mask over the game view.
+ * The mask itself is a small texture the trigger repaints while it moves.
+ */
+class SEchoIris : public SLeafWidget
+{
+public:
+    SLATE_BEGIN_ARGS(SEchoIris) {}
+    SLATE_END_ARGS()
+
+    void Construct(const FArguments&)
+    {
+        SetVisibility(EVisibility::HitTestInvisible);   // never steals input
+        SetCanTick(false);
+    }
+
+    void SetMask(UTexture2D* Texture, const FIntPoint& Size)
+    {
+        MaskBrush.SetResourceObject(Texture);
+        MaskBrush.ImageSize = FVector2D(Size.X, Size.Y);
+        MaskBrush.DrawAs = ESlateBrushDrawType::Image;
+    }
+
+    /** 0 = fully open (draws nothing), 1 = fully closed (solid). */
+    void SetClosed(float InClosed, const FLinearColor& InColor)
+    {
+        Closed = FMath::Clamp(InClosed, 0.0f, 1.0f);
+        Color = InColor;
+    }
+
+    virtual FVector2D ComputeDesiredSize(float) const override { return FVector2D(16.0, 16.0); }
+
+    virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& Geo, const FSlateRect& Cull,
+        FSlateWindowElementList& Out, int32 Layer, const FWidgetStyle& Style, bool bParentEnabled) const override
+    {
+        if (Closed <= 0.0f)
+        {
+            return Layer;
+        }
+
+        const FSlateBrush* Brush = (Closed >= 1.0f) ? FCoreStyle::Get().GetBrush("WhiteBrush") : &MaskBrush;
+        FSlateDrawElement::MakeBox(Out, Layer, Geo.ToPaintGeometry(), Brush, ESlateDrawEffect::None, Color);
+        return Layer;
+    }
+
+private:
+    FSlateBrush MaskBrush;
+    FLinearColor Color = FLinearColor::Black;
+    float Closed = 0.0f;
+};
+
+namespace
+{
+    // Small on purpose: it is stretched over the screen and the softness hides it.
+    const FIntPoint IrisMaskSize(192, 108);
+}
 
 AMemoryEchoTrigger::AMemoryEchoTrigger()
 {
-    // Ticks only while a visual is animating; see UpdateTickEnabled.
+    // Ticks only while the iris is animating; see UpdateTickEnabled.
     PrimaryActorTick.bCanEverTick = true;
     PrimaryActorTick.bStartWithTickEnabled = false;
 
@@ -30,32 +90,6 @@ AMemoryEchoTrigger::AMemoryEchoTrigger()
     InteractionSphere->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
     InteractionSphere->SetGenerateOverlapEvents(true);
     InteractionSphere->SetSphereRadius(InteractionRadius);
-
-    EchoGlow = CreateDefaultSubobject<UPointLightComponent>(TEXT("EchoGlow"));
-    EchoGlow->SetupAttachment(InteractionSphere);
-    EchoGlow->SetIntensityUnits(ELightUnits::Unitless);
-    EchoGlow->SetIntensity(0.0f);
-    EchoGlow->SetAttenuationRadius(450.0f);
-    EchoGlow->SetCastShadows(false);
-    EchoGlow->SetLightColor(GlowColor);
-
-    // Unbound so the look applies wherever the player stands; weight starts at
-    // zero, so it costs nothing until an echo plays.
-    EchoPostProcess = CreateDefaultSubobject<UPostProcessComponent>(TEXT("EchoPostProcess"));
-    EchoPostProcess->SetupAttachment(InteractionSphere);
-    EchoPostProcess->bUnbound = true;
-    EchoPostProcess->BlendWeight = 0.0f;
-
-    FPostProcessSettings& PP = EchoPostProcess->Settings;
-    // Darker and quieter, never brighter: the view closes in around the object.
-    PP.bOverride_ColorSaturation = true;
-    PP.ColorSaturation = FVector4(1.0, 1.0, 1.0, 0.6);
-    PP.bOverride_ColorGain = true;
-    PP.ColorGain = FVector4(0.72, 0.66, 0.58, 1.0);         // dimmed, faintly warm
-    PP.bOverride_VignetteIntensity = true;
-    PP.VignetteIntensity = 1.3f;
-    PP.bOverride_FilmGrainIntensity = true;
-    PP.FilmGrainIntensity = 0.3f;
 }
 
 void AMemoryEchoTrigger::OnConstruction(const FTransform& Transform)
@@ -64,8 +98,6 @@ void AMemoryEchoTrigger::OnConstruction(const FTransform& Transform)
 
     // Keep the editor preview in step with the properties.
     InteractionSphere->SetSphereRadius(InteractionRadius);
-    EchoGlow->SetRelativeLocation(GlowOffset);
-    EchoGlow->SetLightColor(GlowColor);
 }
 
 void AMemoryEchoTrigger::BeginPlay()
@@ -235,42 +267,138 @@ void AMemoryEchoTrigger::BeginEchoVisuals()
         return;
     }
 
+    EnsureIris();
     bEchoPlaying = true;
     EchoElapsed = 0.0f;
-
-    // Close the view down toward the memory. With a lead-in this takes the
-    // whole delay; without one it is quick, so the screen never pops in.
-    FadeView(0.0f, EchoFadeAmount, bPlayPending ? PresentationDelaySeconds : 0.2f, true);
-
     UpdateTickEnabled();
 }
 
 void AMemoryEchoTrigger::EndEchoVisuals()
 {
-    if (bEchoPlaying)
-    {
-        // Open the view back up onto the room.
-        FadeView(EchoFadeAmount, 0.0f, EchoFadeSeconds, false);
-    }
-
     bEchoPlaying = false;
     UpdateTickEnabled();
 }
 
-void AMemoryEchoTrigger::FadeView(float From, float To, float Seconds, bool bHold)
+void AMemoryEchoTrigger::EnsureIris()
 {
-    if (EchoFadeAmount <= 0.0f)
+    if (IrisWidget.IsValid())
     {
         return;
     }
 
-    if (const APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
+    UGameViewportClient* Viewport = GetWorld() ? GetWorld()->GetGameViewport() : nullptr;
+    if (!Viewport)
     {
-        if (PC->PlayerCameraManager)
+        return;
+    }
+
+    if (!IrisTexture)
+    {
+        IrisTexture = UTexture2D::CreateTransient(IrisMaskSize.X, IrisMaskSize.Y, PF_B8G8R8A8);
+        IrisTexture->SRGB = false;
+        IrisTexture->AddressX = TA_Clamp;
+        IrisTexture->AddressY = TA_Clamp;
+
+        // Start fully clear.
+        FTexture2DMipMap& Mip = IrisTexture->GetPlatformData()->Mips[0];
+        FMemory::Memzero(Mip.BulkData.Lock(LOCK_READ_WRITE), IrisMaskSize.X * IrisMaskSize.Y * sizeof(FColor));
+        Mip.BulkData.Unlock();
+        IrisTexture->UpdateResource();
+    }
+
+    IrisWidget = SNew(SEchoIris);
+    IrisWidget->SetMask(IrisTexture, IrisMaskSize);
+    // Below the game's own UI, so the memory screen is drawn on top of it.
+    Viewport->AddViewportWidgetContent(IrisWidget.ToSharedRef(), -100);
+}
+
+void AMemoryEchoTrigger::RedrawIris()
+{
+    if (!IrisTexture || !GetWorld())
+    {
+        return;
+    }
+
+    const int32 W = IrisMaskSize.X;
+    const int32 H = IrisMaskSize.Y;
+
+    FVector2D ViewSize(16.0, 9.0);
+    if (const UGameViewportClient* Viewport = GetWorld()->GetGameViewport())
+    {
+        Viewport->GetViewportSize(ViewSize);
+    }
+    const float Aspect = ViewSize.Y > 1.0 ? static_cast<float>(ViewSize.X / ViewSize.Y) : 1.777f;
+    const float CornerLength = FMath::Sqrt(Aspect * Aspect + 1.0f);
+    const float Time = GetWorld()->GetTimeSeconds();
+
+    // The edge creeps at a steady pace, then takes the centre faster at the end.
+    const float C = IrisClosed;
+    const float Progress = 0.65f * C + 0.35f * C * C * C;
+    const float Amp = 0.55f * EdgeRoughness;
+    const float Edge = FMath::Lerp(1.0f + 0.35f * Amp, -(0.8f * Amp + EdgeSoftness), Progress);
+    // Ease the mask in at the very start and force it shut at the very end, so
+    // nothing pops when it appears and no pinprick of light is left behind.
+    const float FadeIn = FMath::SmoothStep(0.0f, 0.08f, C);
+    const float ForceShut = FMath::SmoothStep(0.88f, 1.0f, C);
+    const float Drift = Time * 0.11f;
+
+    uint8* Data = static_cast<uint8*>(FMemory::Malloc(W * H * 4));
+    for (int32 Y = 0; Y < H; ++Y)
+    {
+        const float Py = (Y + 0.5f) / H * 2.0f - 1.0f;
+        for (int32 X = 0; X < W; ++X)
         {
-            PC->PlayerCameraManager->StartCameraFade(From, To, Seconds, EchoFadeColor, false, bHold);
+            const float Px = ((X + 0.5f) / W * 2.0f - 1.0f) * Aspect;
+            const float R = FMath::Sqrt(Px * Px + Py * Py) / CornerLength;   // 0 centre, 1 corner
+
+            // Warp the sample position with slow noise first. This bends the
+            // shapes into curls, like smoke or ink in water, instead of rays.
+            const float WarpX = FMath::PerlinNoise3D(FVector(Px * 0.9 + 5.2, Py * 0.9 + 1.3, Drift));
+            const float WarpY = FMath::PerlinNoise3D(FVector(Px * 0.9 - 8.7, Py * 0.9 + 6.1, Drift + 3.7));
+            const float Qx = Px + 0.75f * WarpX;
+            const float Qy = Py + 0.75f * WarpY;
+
+            // Layered noise on the warped position: broad billows, then detail.
+            const float Billow = FMath::PerlinNoise3D(FVector(Qx * 1.15 + 11.3, Qy * 1.15 - 4.1, Drift * 1.3));
+            const float Curl = FMath::PerlinNoise3D(FVector(Qx * 2.6 - 7.7, Qy * 2.6 + 2.9, Drift * 2.1));
+            const float Wisp = FMath::PerlinNoise3D(FVector(Qx * 5.4 + 3.1, Qy * 5.4 - 9.4, Drift * 3.4));
+            const float Noise = 0.60f * Billow + 0.28f * Curl + 0.12f * Wisp;
+
+            // Some stretches of the edge are wispy and some are dense.
+            const float SoftVary = 0.5f + 0.5f * FMath::PerlinNoise3D(FVector(Px * 0.7 - 2.0, Py * 0.7 + 14.0, Drift * 0.8));
+            const float Soft = EdgeSoftness * FMath::Lerp(0.55f, 1.7f, SoftVary);
+
+            const float Value = R + Amp * 2.0f * Noise;
+            float Alpha = FMath::SmoothStep(Edge - Soft, Edge + Soft, Value) * FadeIn;
+            Alpha = FMath::Max(Alpha, ForceShut);
+
+            uint8* P = Data + (Y * W + X) * 4;
+            P[0] = 255; P[1] = 255; P[2] = 255;
+            P[3] = static_cast<uint8>(FMath::RoundToInt(FMath::Clamp(Alpha, 0.0f, 1.0f) * 255.0f));
         }
     }
+
+    FUpdateTextureRegion2D* Region = new FUpdateTextureRegion2D(0, 0, 0, 0, W, H);
+    IrisTexture->UpdateTextureRegions(0, 1, Region, W * 4, 4, Data,
+        [](uint8* InData, const FUpdateTextureRegion2D* InRegion)
+        {
+            FMemory::Free(InData);
+            delete InRegion;
+        });
+}
+
+void AMemoryEchoTrigger::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    if (IrisWidget.IsValid())
+    {
+        if (UGameViewportClient* Viewport = GetWorld() ? GetWorld()->GetGameViewport() : nullptr)
+        {
+            Viewport->RemoveViewportWidgetContent(IrisWidget.ToSharedRef());
+        }
+        IrisWidget.Reset();
+    }
+
+    Super::EndPlay(EndPlayReason);
 }
 
 void AMemoryEchoTrigger::HandlePresentationClosed()
@@ -338,9 +466,10 @@ void AMemoryEchoTrigger::TearDownPresentation()
 
 void AMemoryEchoTrigger::UpdateTickEnabled()
 {
-    // Run while something is animating or still fading back to rest.
+    // Run only while the iris is moving, or closed with a time limit to watch.
+    const float Target = bEchoPlaying ? 1.0f : 0.0f;
     const bool bNeedsTick = bEnableEchoVisuals
-        && (bPlayerInRange || bEchoPlaying || EchoAlpha > 0.0f || RangeAlpha > 0.0f);
+        && (!FMath::IsNearlyEqual(IrisClosed, Target) || (bEchoPlaying && MaxEchoVisualSeconds > 0.0f));
     SetActorTickEnabled(bNeedsTick);
 }
 
@@ -358,20 +487,21 @@ void AMemoryEchoTrigger::Tick(float DeltaSeconds)
         }
     }
 
-    const float FadeSpeed = 1.0f / FMath::Max(EchoFadeSeconds, 0.05f);
-    EchoAlpha = FMath::FInterpConstantTo(EchoAlpha, bEchoPlaying ? 1.0f : 0.0f, DeltaSeconds, FadeSpeed);
+    // Close over the lead-in so the view is shut just as the memory screen
+    // appears; open again at the fade-out speed.
+    const float CloseSpeed = 1.0f / FMath::Max(PresentationDelaySeconds, 0.15f);
+    const float OpenSpeed = 1.0f / FMath::Max(EchoFadeSeconds, 0.05f);
+    IrisClosed = FMath::FInterpConstantTo(
+        IrisClosed, bEchoPlaying ? 1.0f : 0.0f, DeltaSeconds, bEchoPlaying ? CloseSpeed : OpenSpeed);
 
-    // Invite interaction only while there is still a memory to play.
-    const bool bInvite = bPlayerInRange && !bHasPlayed && !bPlayPending;
-    RangeAlpha = FMath::FInterpConstantTo(RangeAlpha, bInvite ? 1.0f : 0.0f, DeltaSeconds, 2.0f);
-
-    PulseTime += DeltaSeconds;
-    const float Pulse = 0.5f + 0.5f * FMath::Sin(PulseTime * PulseRate * 2.0f * UE_PI);
-    // Never fully dark while inviting, so the cue stays readable between pulses.
-    const float Invite = RangeAlpha * FMath::Lerp(0.35f, 1.0f, Pulse) * GlowIntensity;
-
-    EchoGlow->SetIntensity(FMath::Max(Invite, EchoAlpha * EchoGlowIntensity));
-    EchoPostProcess->BlendWeight = FMath::SmoothStep(0.0f, 1.0f, EchoAlpha);
+    if (IrisWidget.IsValid())
+    {
+        if (IrisClosed > 0.0f && IrisClosed < 1.0f)
+        {
+            RedrawIris();
+        }
+        IrisWidget->SetClosed(IrisClosed, EchoFadeColor);
+    }
 
     UpdateTickEnabled();
 }
