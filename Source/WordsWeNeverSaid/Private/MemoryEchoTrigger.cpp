@@ -47,16 +47,15 @@ AMemoryEchoTrigger::AMemoryEchoTrigger()
     EchoPostProcess->BlendWeight = 0.0f;
 
     FPostProcessSettings& PP = EchoPostProcess->Settings;
+    // Darker and quieter, never brighter: the view closes in around the object.
     PP.bOverride_ColorSaturation = true;
-    PP.ColorSaturation = FVector4(1.0, 1.0, 1.0, 0.4);      // drained, like an old photograph
+    PP.ColorSaturation = FVector4(1.0, 1.0, 1.0, 0.6);
     PP.bOverride_ColorGain = true;
-    PP.ColorGain = FVector4(1.08, 0.98, 0.82, 1.0);         // warm tint
+    PP.ColorGain = FVector4(0.72, 0.66, 0.58, 1.0);         // dimmed, faintly warm
     PP.bOverride_VignetteIntensity = true;
-    PP.VignetteIntensity = 0.9f;
-    PP.bOverride_BloomIntensity = true;
-    PP.BloomIntensity = 1.4f;
+    PP.VignetteIntensity = 1.3f;
     PP.bOverride_FilmGrainIntensity = true;
-    PP.FilmGrainIntensity = 0.35f;
+    PP.FilmGrainIntensity = 0.3f;
 }
 
 void AMemoryEchoTrigger::OnConstruction(const FTransform& Transform)
@@ -239,26 +238,39 @@ void AMemoryEchoTrigger::BeginEchoVisuals()
     bEchoPlaying = true;
     EchoElapsed = 0.0f;
 
-    // A short warm flash marks the moment the memory surfaces.
-    if (FlashStrength > 0.0f)
-    {
-        if (const APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
-        {
-            if (PC->PlayerCameraManager)
-            {
-                PC->PlayerCameraManager->StartCameraFade(
-                    FlashStrength, 0.0f, EchoFadeSeconds, GlowColor, false, false);
-            }
-        }
-    }
+    // Close the view down toward the memory. With a lead-in this takes the
+    // whole delay; without one it is quick, so the screen never pops in.
+    FadeView(0.0f, EchoFadeAmount, bPlayPending ? PresentationDelaySeconds : 0.2f, true);
 
     UpdateTickEnabled();
 }
 
 void AMemoryEchoTrigger::EndEchoVisuals()
 {
+    if (bEchoPlaying)
+    {
+        // Open the view back up onto the room.
+        FadeView(EchoFadeAmount, 0.0f, EchoFadeSeconds, false);
+    }
+
     bEchoPlaying = false;
     UpdateTickEnabled();
+}
+
+void AMemoryEchoTrigger::FadeView(float From, float To, float Seconds, bool bHold)
+{
+    if (EchoFadeAmount <= 0.0f)
+    {
+        return;
+    }
+
+    if (const APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
+    {
+        if (PC->PlayerCameraManager)
+        {
+            PC->PlayerCameraManager->StartCameraFade(From, To, Seconds, EchoFadeColor, false, bHold);
+        }
+    }
 }
 
 void AMemoryEchoTrigger::HandlePresentationClosed()
@@ -342,7 +354,7 @@ void AMemoryEchoTrigger::Tick(float DeltaSeconds)
         EchoElapsed += DeltaSeconds;
         if (MaxEchoVisualSeconds > 0.0f && EchoElapsed >= MaxEchoVisualSeconds)
         {
-            bEchoPlaying = false;
+            EndEchoVisuals();
         }
     }
 

@@ -59,20 +59,22 @@ public:
     TSubclassOf<UActorComponent> PresentationComponentClass;
 
     // ---- Echo visuals -------------------------------------------------------
-    // A readable cue that the object matters, then a short "remembered" look
-    // while the echo plays. Kept gentle on purpose: no shake, no hard cuts.
+    // Nothing happens to the room until the player interacts. In range, the
+    // object alone carries a faint glow. On interaction the object flares and
+    // the view closes in and fades out to the memory, then fades back after.
+    // Kept gentle on purpose: no shake, no hard cuts, no bright flashes.
 
     /** Turn the glow, flash and memory look on or off for this trigger. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals")
     bool bEnableEchoVisuals = true;
 
-    /** Colour of the glow and of the flash when the echo starts. */
+    /** Colour of the glow on the object. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals")
     FLinearColor GlowColor = FLinearColor(1.0f, 0.78f, 0.52f);
 
     /** Peak brightness of the slow pulse shown while the player is in range. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0"))
-    float GlowIntensity = 1200.0f;
+    float GlowIntensity = 900.0f;
 
     /** Brightness of the glow while the echo is playing. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0"))
@@ -90,9 +92,17 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.05"))
     float EchoFadeSeconds = 1.2f;
 
-    /** Strength of the brief flash when the echo starts. 0 disables it. */
+    /**
+     * How far the view fades out as the echo begins: 1 goes fully to
+     * EchoFadeColor, 0 disables the fade. The view fades back when the echo
+     * is dismissed.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0", ClampMax = "1.0"))
-    float FlashStrength = 0.45f;
+    float EchoFadeAmount = 1.0f;
+
+    /** Colour the view fades to. Black leads straight into the memory screen. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals")
+    FLinearColor EchoFadeColor = FLinearColor::Black;
 
     /**
      * Safety limit for the memory look, in seconds. It normally ends when the
@@ -103,8 +113,8 @@ public:
     float MaxEchoVisualSeconds = 30.0f;
 
     /**
-     * Seconds between interacting and the memory screen appearing. The flash
-     * and the fade into the memory look play in this gap, so they are seen
+     * Seconds between interacting and the memory screen appearing. The object
+     * flares and the view fades out in this gap, so the transition is seen
      * before the presentation covers the view. 0 shows the screen at once.
      */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Memory Echo|Visuals", meta = (ClampMin = "0.0"))
@@ -155,6 +165,7 @@ private:
     void OnInteractPressed();
 
     void BeginEchoVisuals();
+    void FadeView(float From, float To, float Seconds, bool bHold);
     void FinishPendingPlay();
     void EnsurePresentation();
     void TearDownPresentation();
