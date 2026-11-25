@@ -152,6 +152,9 @@ private:
     void TearDownPresentation();
     void UpdateTickEnabled();
 
+    /** Arms the trigger for a player who was already inside the sphere at BeginPlay. */
+    void ArmForPawnsAlreadyInRange();
+
     /** Bound to the presentation component's OnMemoryPresentationClosed, when it has one. */
     UFUNCTION()
     void HandlePresentationClosed();

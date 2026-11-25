@@ -7,6 +7,7 @@
 #include "Engine/GameViewportClient.h"
 #include "Engine/Texture2D.h"
 #include "Engine/World.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "MemoryEchoDataAsset.h"
@@ -108,11 +109,35 @@ void AMemoryEchoTrigger::BeginPlay()
     InteractionSphere->OnComponentBeginOverlap.AddDynamic(this, &AMemoryEchoTrigger::HandleBeginOverlap);
     InteractionSphere->OnComponentEndOverlap.AddDynamic(this, &AMemoryEchoTrigger::HandleEndOverlap);
 
+    // A player who spawns inside the sphere gets no begin-overlap event, because
+    // the overlap already exists before the delegates above are bound. Pick them
+    // up on the next tick, once the pawn is possessed.
+    GetWorldTimerManager().SetTimerForNextTick(this, &AMemoryEchoTrigger::ArmForPawnsAlreadyInRange);
+
     if (!Memory)
     {
         UWWNSLogLibrary::LogEvent(
             EWWNSLogChannel::Memory, EWWNSLogLevel::Warning,
             TEXT("No Memory asset assigned; this trigger will do nothing."), this);
+    }
+}
+
+void AMemoryEchoTrigger::ArmForPawnsAlreadyInRange()
+{
+    if (bPlayerInRange)
+    {
+        return;
+    }
+
+    TArray<AActor*> Overlapping;
+    InteractionSphere->GetOverlappingActors(Overlapping, APawn::StaticClass());
+    for (AActor* Actor : Overlapping)
+    {
+        HandleBeginOverlap(InteractionSphere, Actor, nullptr, INDEX_NONE, false, FHitResult());
+        if (bPlayerInRange)
+        {
+            break;
+        }
     }
 }
 
@@ -128,7 +153,7 @@ void AMemoryEchoTrigger::HandleBeginOverlap(
     }
 
     APlayerController* PC = Cast<APlayerController>(Pawn->GetController());
-    if (!PC)
+    if (!PC || bPlayerInRange)
     {
         return;
     }
